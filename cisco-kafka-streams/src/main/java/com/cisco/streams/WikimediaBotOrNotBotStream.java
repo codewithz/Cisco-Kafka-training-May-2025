@@ -65,7 +65,7 @@ public class WikimediaBotOrNotBotStream {
                             .groupBy((nullKey, botOrNotBot) -> botOrNotBot)
                             // Count the occurrences of each classification and materialize the results into a state store
                             .count(Materialized.<String, Long, KeyValueStore<Bytes, byte[]>>as(BOT_COUNT_STORE)
-                                // Specify the key and value serdes for the state store
+                                // Specify the key and value serdes for the state store RockDB
                                 .withKeySerde(Serdes.String())
                                 .withValueSerde(Serdes.Long())
                             );

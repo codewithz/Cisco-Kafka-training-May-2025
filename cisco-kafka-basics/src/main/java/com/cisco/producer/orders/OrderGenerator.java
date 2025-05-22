@@ -1,11 +1,12 @@
 package com.cisco.producer.orders;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.json.JSONObject;
+
 
 import java.util.Properties;
 import java.util.Random;
@@ -30,7 +31,7 @@ public class OrderGenerator {
         Random random = new Random();
 
         for (int i = 1; i <= 2000; i++) {
-            JSONPObject order = new JSONObject();
+            JSONObject order = new JSONObject();
             order.put("orderId", UUID.randomUUID().toString());
             order.put("customerId", 1000 + random.nextInt(100));
             order.put("name", NAMES[random.nextInt(NAMES.length)]);
