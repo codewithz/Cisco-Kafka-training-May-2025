@@ -112,6 +112,15 @@
       <artifactId>okhttp-eventsource</artifactId>
       <version>2.5.0</version>
     </dependency>
+
+
+    <dependency>
+      <groupId>org.opensearch.client</groupId>
+      <artifactId>opensearch-rest-high-level-client</artifactId>
+      <version>1.2.4</version>
+    </dependency>
+
+
   </dependencies>
 
 
