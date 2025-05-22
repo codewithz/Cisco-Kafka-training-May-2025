@@ -83,6 +83,9 @@ GET my-index/_mapping
 ```json
 GET my-index/_search
 ```
+event: message
+id: [{"topic":"eqiad.mediawiki.recentchange","partition":0,"timestamp":1747906453001},{"topic":"codfw.mediawiki.recentchange","partition":0,"offset":-1}]
+data: {"$schema":"/mediawiki/recentchange/1.0.0","meta":{"uri":"https://www.wikidata.org/wiki/Q63761164","request_id":"aed54472-1f67-41ef-a12a-b3fe8700149f","id":"f9cf0cf6-2bbc-452c-a9a4-5cd3f5c3450a","dt":"2025-05-22T09:34:13Z","domain":"www.wikidata.org","stream":"mediawiki.recentchange","topic":"eqiad.mediawiki.recentchange","partition":0,"offset":5604911050},"id":2422790437,"type":"edit","namespace":0,"title":"Q63761164","title_url":"https://www.wikidata.org/wiki/Q63761164","comment":"/* wbsetclaim-update:2||1|1 */ [[Property:P20]]: [[Q220]]","timestamp":1747906453,"user":"Tiberioclaudio99","bot":false,"notify_url":"https://www.wikidata.org/w/index.php?diff=2351154701&oldid=2351154603&rcid=2422790437","minor":false,"patrolled":true,"length":{"old":43971,"new":44413},"revision":{"old":2351154603,"new":2351154701},"server_url":"https://www.wikidata.org","server_name":"www.wikidata.org","server_script_path":"/w","wiki":"wikidatawiki","parsedcomment":"‎<span dir=\"auto\"><span class=\"autocomment\">Se cambió una afirmación: </span></span> <a href=\"/wiki/Property:P20\" title=\"‎lugar de fallecimiento‎ | ‎sitio donde murió una persona, animal o personaje ficticio (el lugar más específico disponible)‎\"><span class=\"wb-itemlink\"><span class=\"wb-itemlink-label\" lang=\"es\" dir=\"ltr\">lugar de fallecimiento</span> <span class=\"wb-itemlink-id\">(P20)</span></span></a>: <a href=\"/wiki/Q220\" title=\"‎Roma‎ | ‎capital de Italia‎\"><span class=\"wb-itemlink\"><span class=\"wb-itemlink-label\" lang=\"es\" dir=\"ltr\">Roma</span> <span class=\"wb-itemlink-id\">(Q220)</span></span></a>"}
 
 #### Create a new index
 ```json
