@@ -11,7 +11,9 @@ import org.apache.kafka.streams.kstream.*;
 import org.apache.kafka.streams.state.WindowStore;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Properties;
 
 public class WindowedCityOrderCountApp {
@@ -51,8 +53,11 @@ public class WindowedCityOrderCountApp {
                 .toStream()
                 .map((windowedKey,count)->{
                     String city=windowedKey.key();
-                    String startTime=String.valueOf(windowedKey.window().start());
-                    String endTime=String.valueOf(windowedKey.window().end());
+                    // Format the start time
+                     String startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(windowedKey.window().start()));
+                    // Format the end time
+                     String endTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(windowedKey.window().end()));
+
                     JSONObject jsonObject=new JSONObject();
                     jsonObject.put("city",city);
                     jsonObject.put("count",count);
@@ -70,7 +75,7 @@ public class WindowedCityOrderCountApp {
         System.out.println(streams.toString());
         // Add shutdown hook to respond to SIGTERM and gracefully close Kafka Streams
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
-        
+
 
     }
 }
