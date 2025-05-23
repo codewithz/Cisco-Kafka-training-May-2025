@@ -28,6 +28,32 @@ public class WikimediaChangesProducer {
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
+
+      // Enables idempotence for the producer to ensure that messages are not duplicated.
+        // This setting guarantees exactly-once delivery semantics when combined with acks=all and retries.
+        properties.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+
+        // Configures the producer to wait for acknowledgment from all in-sync replicas (ISRs).
+        // This ensures high durability of the messages sent by the producer.
+        properties.setProperty(ProducerConfig.ACKS_CONFIG, "all");
+
+        // Sets the maximum number of retries for the producer in case of transient failures.
+        // This is set to the maximum possible value to ensure retries are not limited.
+        properties.setProperty(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
+
+        // Configures the producer to use Snappy compression for message batches.
+        // This reduces the size of the data sent over the network, improving throughput.
+        properties.setProperty(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
+
+        // Sets the linger time for the producer to 20 milliseconds.
+        // This allows the producer to batch more records together, improving throughput at the cost of slight latency.
+        properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
+
+        // Configures the batch size for the producer to 32 KB.
+        // Larger batch sizes improve throughput by sending more data in a single request.
+        properties.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, Integer.toString(32 * 1024));
+
+        
         KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
         String url="https://stream.wikimedia.org/v2/stream/recentchange";
 

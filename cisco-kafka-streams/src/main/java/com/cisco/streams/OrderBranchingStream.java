@@ -52,6 +52,19 @@ public class OrderBranchingStream {
         highValueOrders.to(OUTPUT_HIGH_TOPIC, Produced.with(Serdes.String(), Serdes.String()));
         lowValueOrders.to(OUTPUT_LOW_TOPIC, Produced.with(Serdes.String(), Serdes.String()));
 
+        Map<String, KStream<String, String>> branches = orderStream
+                .split(Named.as("transaction-"))
+                .branch((String orderKey, String orderValue) -> {
+                    JSONObject order = new JSONObject(orderValue);
+                    return order.optInt("amount", 0) >= 5000;
+                }, Branched.as("high"))
+                .branch((String orderKey, String orderValue) -> {
+                    JSONObject order = new JSONObject(orderValue);
+                    int amt = order.optInt("amount", 0);
+                    return amt >= 1000 && amt < 5000;
+                }, Branched.as("medium"));
+
+
         // Create a Kafka Streams instance
         KafkaStreams streams = new KafkaStreams(builder.build(), properties);
         // Start the Kafka Streams application
