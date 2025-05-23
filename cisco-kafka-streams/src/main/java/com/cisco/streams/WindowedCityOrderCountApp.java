@@ -42,11 +42,20 @@ public class WindowedCityOrderCountApp {
             return KeyValue.pair(city,order.toString());
              })
                 .groupByKey(Grouped.with(Serdes.String(),Serdes.String()))
-                .windowedBy((TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(2))))
+                //.windowedBy((TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(2))))
+                .windowedBy(TimeWindows.ofSizeAndGrace(Duration.ofMinutes(5),Duration.ofSeconds(0)).advanceBy(Duration.ofMinutes(1)))
                 .count(Materialized.<String,Long, WindowStore<Bytes,byte[]>>as("windowed-city-order-count-store")
                         .withKeySerde(Serdes.String())
                         .withValueSerde(Serdes.Long()));
+        //Tumbling
+//        11:30 - 11:35
+//        11:36 - 11:40
 
+
+        //Hopping
+//        11:30 - 11:35
+//        11:31 - 11:36
+//        11:32 - 11:37
 
 
         cityOrderCount
